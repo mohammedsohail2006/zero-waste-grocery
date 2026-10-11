@@ -1,6 +1,6 @@
-# Zero-Waste Grocery — Agentic AI Starter
+# Zero-Waste Grocery — Freshwise
 
-Starter scaffold for the GDGoC HITAM PS2 hackathon problem: perishable demand, shelf-life/spoilage risk, explainable recommendations, planner approval, simulated POS/ERP/WMS, and four add-ons (bundles, manager copilot, donation/disposal, consent-aware customer targeting).
+Freshwise is a zero-waste grocery management prototype for perishable inventory, expiry awareness, transparent demand baselines, and waste reduction.
 
 ## Stack
 - Frontend: React, TypeScript, Vite, Tailwind CSS, Recharts, Supabase JS
@@ -15,15 +15,23 @@ Node.js 20.19+ or 22.12+, Python 3.11+, Git, Supabase project, Groq API key.
 ```bash
 cd frontend
 npm install
-npm install @supabase/supabase-js recharts lucide-react
-npm install -D tailwindcss @tailwindcss/vite
-npx shadcn@latest init
-npx shadcn@latest add button card badge table tabs input dialog dropdown-menu
 cp .env.example .env.local
 npm run dev
 ```
 On Windows PowerShell use `Copy-Item .env.example .env.local` instead of `cp`.
-Follow the current shadcn Vite prompts if its CLI differs.
+
+The frontend includes overview, inventory, expiry, demand baseline, AI assistant, reports, and settings pages. Demo inventory and preferences are stored in the current browser's local storage and are not sent to Supabase. The inventory CSV export contains the local demo catalog.
+
+The moving-average forecast is illustrative demo data, not a trained model or a real store prediction. Waste events are not connected; waste avoided and realized savings are therefore not reported as actual outcomes. Potential markdown recovery is explicitly labeled an estimate.
+
+The AI assistant calls the existing `/api/v1/copilot/answer` endpoint. That endpoint currently requires trusted, server-queried inventory context which is not implemented yet. If it is unavailable or rejects the request, the UI clearly switches to non-AI demo guidance; it does not send local browser inventory as trusted context.
+
+There is no production inventory API or Supabase mutation policy in the current scaffold. Do not use browser-local demo inventory as operational store data.
+
+Build and type-check the frontend with:
+```bash
+npm run build
+```
 
 ## Backend
 ```bash
